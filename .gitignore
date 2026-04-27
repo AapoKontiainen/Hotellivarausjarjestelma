@@ -398,6 +398,29 @@ MSBuild_Logs/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
+# ------------------------------
+# Repository-specific ignores
+# ------------------------------
+
+# Deployment artifacts
+.deploy/
+
+# Frontend build and cache artifacts
+src/HotelLakeview.Frontend/dist/
+src/HotelLakeview.Frontend/node_modules/
+*.tsbuildinfo
+
+# Local environment overrides
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Local SQLite databases
+*.db
+*.db-shm
+*.db-wal
+
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 

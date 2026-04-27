@@ -83,7 +83,7 @@ async function request<T>(path: string, method: HttpMethod = 'GET', body?: unkno
 
   if (!response.ok) {
     const message = await response.text();
-    throw new Error(message || `Request failed with status ${response.status}`);
+    throw new Error(message || `Pyyntö epäonnistui, statuskoodi ${response.status}`);
   }
 
   if (response.status === 204) {

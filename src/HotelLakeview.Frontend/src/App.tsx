@@ -110,7 +110,7 @@ export default function App() {
     mutationFn: createCustomer,
     onSuccess: async () => {
       setCustomerForm({ firstName: '', lastName: '', email: '', phone: '', notes: '' });
-      setNotice('Customer created.');
+      setNotice('Asiakas luotu.');
       await queryClient.invalidateQueries({ queryKey: ['customers'] });
     },
     onError: (error: Error) => setNotice(error.message)
@@ -119,7 +119,7 @@ export default function App() {
   const deleteCustomerMutation = useMutation({
     mutationFn: deleteCustomer,
     onSuccess: async () => {
-      setNotice('Customer deleted.');
+      setNotice('Asiakas poistettu.');
       await queryClient.invalidateQueries({ queryKey: ['customers'] });
       await queryClient.invalidateQueries({ queryKey: ['bookings'] });
     },
@@ -130,7 +130,7 @@ export default function App() {
     mutationFn: createRoomType,
     onSuccess: async () => {
       setRoomTypeForm({ name: '', description: '', baseNightlyRate: '119', maxGuests: '2' });
-      setNotice('Room type created.');
+      setNotice('Huonetyyppi luotu.');
       await queryClient.invalidateQueries({ queryKey: ['room-types'] });
     },
     onError: (error: Error) => setNotice(error.message)
@@ -139,7 +139,7 @@ export default function App() {
   const deleteRoomTypeMutation = useMutation({
     mutationFn: deleteRoomType,
     onSuccess: async () => {
-      setNotice('Room type archived.');
+      setNotice('Huonetyyppi arkistoitu.');
       await queryClient.invalidateQueries({ queryKey: ['room-types'] });
       await queryClient.invalidateQueries({ queryKey: ['rooms'] });
     },
@@ -150,7 +150,7 @@ export default function App() {
     mutationFn: createRoom,
     onSuccess: async () => {
       setRoomForm({ roomNumber: '', roomTypeId: '' });
-      setNotice('Room created.');
+      setNotice('Huone luotu.');
       await queryClient.invalidateQueries({ queryKey: ['rooms'] });
     },
     onError: (error: Error) => setNotice(error.message)
@@ -159,7 +159,7 @@ export default function App() {
   const deleteRoomMutation = useMutation({
     mutationFn: deleteRoom,
     onSuccess: async () => {
-      setNotice('Room archived.');
+      setNotice('Huone arkistoitu.');
       await queryClient.invalidateQueries({ queryKey: ['rooms'] });
       await queryClient.invalidateQueries({ queryKey: ['bookings'] });
     },
@@ -169,7 +169,7 @@ export default function App() {
   const createBookingMutation = useMutation({
     mutationFn: createBooking,
     onSuccess: async () => {
-      setNotice('Booking created.');
+      setNotice('Varaus luotu.');
       await queryClient.invalidateQueries({ queryKey: ['bookings'] });
       await queryClient.invalidateQueries({ queryKey: ['rooms'] });
     },
@@ -179,7 +179,7 @@ export default function App() {
   const updateBookingMutation = useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: Parameters<typeof updateBooking>[1] }) => updateBooking(id, payload),
     onSuccess: async () => {
-      setNotice('Booking updated.');
+      setNotice('Varaus päivitetty.');
       setEditingBookingId(null);
       await queryClient.invalidateQueries({ queryKey: ['bookings'] });
     },
@@ -189,7 +189,7 @@ export default function App() {
   const deleteBookingMutation = useMutation({
     mutationFn: deleteBooking,
     onSuccess: async () => {
-      setNotice('Booking cancelled.');
+      setNotice('Varaus peruttu.');
       await queryClient.invalidateQueries({ queryKey: ['bookings'] });
     },
     onError: (error: Error) => setNotice(error.message)
@@ -199,7 +199,7 @@ export default function App() {
     mutationFn: searchAvailability,
     onSuccess: (data) => {
       setAvailabilityResults(data);
-      setNotice(`Found ${data.length} available rooms.`);
+      setNotice(`Löytyi ${data.length} vapaata huonetta.`);
     },
     onError: (error: Error) => setNotice(error.message)
   });
@@ -241,7 +241,7 @@ export default function App() {
   function submitRoomForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!roomForm.roomTypeId) {
-      setNotice('Select a room type first.');
+      setNotice('Valitse ensin huonetyyppi.');
       return;
     }
 
@@ -255,7 +255,7 @@ export default function App() {
     event.preventDefault();
 
     if (!bookingForm.customerId || !bookingForm.roomId) {
-      setNotice('Select customer and room first.');
+      setNotice('Valitse ensin asiakas ja huone.');
       return;
     }
 
@@ -289,7 +289,7 @@ export default function App() {
       specialRequests: booking.specialRequests ?? ''
     });
     setActiveTab('bookings');
-    setNotice(`Editing booking ${booking.id.slice(0, 8)}...`);
+    setNotice(`Muokataan varausta ${booking.id.slice(0, 8)}...`);
   }
 
   function resetBookingForm() {
@@ -319,35 +319,35 @@ export default function App() {
       <header className="hero">
         <div>
           <p className="eyebrow">Hotel Lakeview</p>
-          <h1>Boutique Hotel Operations</h1>
+          <h1>Vastaanoton hallintanäkymä</h1>
           <p className="lede">
-            Manage customers, rooms and bookings in one place. Seasonal pricing and occupancy analytics are live.
+            Hallitse asiakkaita, huoneita ja varauksia yhdessä näkymässä. Kausihinnoittelu ja käyttöasteanalytiikka päivittyvät reaaliajassa.
           </p>
         </div>
         <div className="hero-meta">
-          <p>Today: {format(today, 'yyyy-MM-dd')}</p>
+          <p>Tänään: {format(today, 'yyyy-MM-dd')}</p>
           {notice && <p className="notice">{notice}</p>}
         </div>
       </header>
 
-      <nav className="tabs" aria-label="Main modules">
-        <button className={activeTab === 'customers' ? 'active' : ''} onClick={() => setActiveTab('customers')}>Customers</button>
-        <button className={activeTab === 'rooms' ? 'active' : ''} onClick={() => setActiveTab('rooms')}>Rooms</button>
-        <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => setActiveTab('bookings')}>Bookings</button>
-        <button className={activeTab === 'availability' ? 'active' : ''} onClick={() => setActiveTab('availability')}>Availability</button>
-        <button className={activeTab === 'reports' ? 'active' : ''} onClick={() => setActiveTab('reports')}>Reports</button>
+      <nav className="tabs" aria-label="Päävalikot">
+        <button className={activeTab === 'customers' ? 'active' : ''} onClick={() => setActiveTab('customers')}>Asiakkaat</button>
+        <button className={activeTab === 'rooms' ? 'active' : ''} onClick={() => setActiveTab('rooms')}>Huoneet</button>
+        <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => setActiveTab('bookings')}>Varaukset</button>
+        <button className={activeTab === 'availability' ? 'active' : ''} onClick={() => setActiveTab('availability')}>Saatavuus</button>
+        <button className={activeTab === 'reports' ? 'active' : ''} onClick={() => setActiveTab('reports')}>Raportit</button>
       </nav>
 
       {activeTab === 'customers' && (
         <section className="panel">
-          <h2>Customers</h2>
+          <h2>Asiakkaat</h2>
           <form onSubmit={submitCustomerForm} className="form-grid">
-            <input placeholder="First name" value={customerForm.firstName} onChange={(event) => setCustomerForm({ ...customerForm, firstName: event.target.value })} required />
-            <input placeholder="Last name" value={customerForm.lastName} onChange={(event) => setCustomerForm({ ...customerForm, lastName: event.target.value })} required />
-            <input type="email" placeholder="Email" value={customerForm.email} onChange={(event) => setCustomerForm({ ...customerForm, email: event.target.value })} required />
-            <input placeholder="Phone" value={customerForm.phone} onChange={(event) => setCustomerForm({ ...customerForm, phone: event.target.value })} required />
-            <input className="full" placeholder="Notes" value={customerForm.notes} onChange={(event) => setCustomerForm({ ...customerForm, notes: event.target.value })} />
-            <button disabled={isBusy}>Create customer</button>
+            <input placeholder="Etunimi" value={customerForm.firstName} onChange={(event) => setCustomerForm({ ...customerForm, firstName: event.target.value })} required />
+            <input placeholder="Sukunimi" value={customerForm.lastName} onChange={(event) => setCustomerForm({ ...customerForm, lastName: event.target.value })} required />
+            <input type="email" placeholder="Sähköposti" value={customerForm.email} onChange={(event) => setCustomerForm({ ...customerForm, email: event.target.value })} required />
+            <input placeholder="Puhelin" value={customerForm.phone} onChange={(event) => setCustomerForm({ ...customerForm, phone: event.target.value })} required />
+            <input className="full" placeholder="Muistiinpanot" value={customerForm.notes} onChange={(event) => setCustomerForm({ ...customerForm, notes: event.target.value })} />
+            <button disabled={isBusy}>Luo asiakas</button>
           </form>
 
           <ul className="entity-list">
@@ -357,7 +357,7 @@ export default function App() {
                   <strong>{customer.firstName} {customer.lastName}</strong>
                   <span>{customer.email} - {customer.phone}</span>
                 </div>
-                <button className="danger" onClick={() => deleteCustomerMutation.mutate(customer.id)} disabled={isBusy}>Delete</button>
+                <button className="danger" onClick={() => deleteCustomerMutation.mutate(customer.id)} disabled={isBusy}>Poista</button>
               </li>
             ))}
           </ul>
@@ -367,13 +367,13 @@ export default function App() {
       {activeTab === 'rooms' && (
         <section className="panel two-col">
           <div>
-            <h2>Room types</h2>
+            <h2>Huonetyypit</h2>
             <form onSubmit={submitRoomTypeForm} className="form-grid compact">
-              <input placeholder="Name" value={roomTypeForm.name} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, name: event.target.value })} required />
-              <input type="number" placeholder="Base price" value={roomTypeForm.baseNightlyRate} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, baseNightlyRate: event.target.value })} required />
-              <input type="number" placeholder="Max guests" value={roomTypeForm.maxGuests} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, maxGuests: event.target.value })} required />
-              <input className="full" placeholder="Description" value={roomTypeForm.description} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, description: event.target.value })} />
-              <button disabled={isBusy}>Create room type</button>
+              <input placeholder="Nimi" value={roomTypeForm.name} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, name: event.target.value })} required />
+              <input type="number" placeholder="Perushinta" value={roomTypeForm.baseNightlyRate} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, baseNightlyRate: event.target.value })} required />
+              <input type="number" placeholder="Maksimivieraat" value={roomTypeForm.maxGuests} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, maxGuests: event.target.value })} required />
+              <input className="full" placeholder="Kuvaus" value={roomTypeForm.description} onChange={(event) => setRoomTypeForm({ ...roomTypeForm, description: event.target.value })} />
+              <button disabled={isBusy}>Luo huonetyyppi</button>
             </form>
 
             <ul className="entity-list">
@@ -381,25 +381,25 @@ export default function App() {
                 <li key={roomType.id}>
                   <div>
                     <strong>{roomType.name}</strong>
-                    <span>{roomType.baseNightlyRate} EUR / night, max {roomType.maxGuests}</span>
+                    <span>{roomType.baseNightlyRate} EUR / yö, max {roomType.maxGuests}</span>
                   </div>
-                  <button className="danger" onClick={() => deleteRoomTypeMutation.mutate(roomType.id)} disabled={isBusy}>Delete</button>
+                  <button className="danger" onClick={() => deleteRoomTypeMutation.mutate(roomType.id)} disabled={isBusy}>Poista</button>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h2>Rooms</h2>
+            <h2>Huoneet</h2>
             <form onSubmit={submitRoomForm} className="form-grid compact">
-              <input placeholder="Room number" value={roomForm.roomNumber} onChange={(event) => setRoomForm({ ...roomForm, roomNumber: event.target.value })} required />
+              <input placeholder="Huonenumero" value={roomForm.roomNumber} onChange={(event) => setRoomForm({ ...roomForm, roomNumber: event.target.value })} required />
               <select value={roomForm.roomTypeId} onChange={(event) => setRoomForm({ ...roomForm, roomTypeId: event.target.value })} required>
-                <option value="">Select room type</option>
+                <option value="">Valitse huonetyyppi</option>
                 {roomTypesQuery.data?.map((roomType) => (
                   <option key={roomType.id} value={roomType.id}>{roomType.name}</option>
                 ))}
               </select>
-              <button disabled={isBusy}>Create room</button>
+              <button disabled={isBusy}>Luo huone</button>
             </form>
 
             <ul className="entity-list">
@@ -409,7 +409,7 @@ export default function App() {
                     <strong>{room.roomNumber}</strong>
                     <span>{room.roomTypeName}</span>
                   </div>
-                  <button className="danger" onClick={() => deleteRoomMutation.mutate(room.id)} disabled={isBusy}>Delete</button>
+                  <button className="danger" onClick={() => deleteRoomMutation.mutate(room.id)} disabled={isBusy}>Poista</button>
                 </li>
               ))}
             </ul>
@@ -420,17 +420,17 @@ export default function App() {
       {activeTab === 'bookings' && (
         <section className="panel two-col">
           <div>
-            <h2>{editingBookingId ? 'Edit booking' : 'Create booking'}</h2>
+            <h2>{editingBookingId ? 'Muokkaa varausta' : 'Luo varaus'}</h2>
             <form onSubmit={submitBookingForm} className="form-grid compact">
               <select value={bookingForm.customerId} onChange={(event) => setBookingForm({ ...bookingForm, customerId: event.target.value })} required>
-                <option value="">Select customer</option>
+                <option value="">Valitse asiakas</option>
                 {customersQuery.data?.map((customer) => (
                   <option key={customer.id} value={customer.id}>{customer.firstName} {customer.lastName}</option>
                 ))}
               </select>
 
               <select value={bookingForm.roomId} onChange={(event) => setBookingForm({ ...bookingForm, roomId: event.target.value })} required>
-                <option value="">Select room</option>
+                <option value="">Valitse huone</option>
                 {roomsQuery.data?.map((room) => (
                   <option key={room.id} value={room.id}>{room.roomNumber} ({room.roomTypeName})</option>
                 ))}
@@ -439,15 +439,15 @@ export default function App() {
               <input type="date" value={bookingForm.checkInDate} onChange={(event) => setBookingForm({ ...bookingForm, checkInDate: event.target.value })} required />
               <input type="date" value={bookingForm.checkOutDate} onChange={(event) => setBookingForm({ ...bookingForm, checkOutDate: event.target.value })} required />
               <input type="number" min="1" max="4" value={bookingForm.guestCount} onChange={(event) => setBookingForm({ ...bookingForm, guestCount: event.target.value })} required />
-              <input className="full" placeholder="Special requests" value={bookingForm.specialRequests} onChange={(event) => setBookingForm({ ...bookingForm, specialRequests: event.target.value })} />
+              <input className="full" placeholder="Erityistoiveet" value={bookingForm.specialRequests} onChange={(event) => setBookingForm({ ...bookingForm, specialRequests: event.target.value })} />
 
-              <button disabled={isBusy}>{editingBookingId ? 'Update booking' : 'Create booking'}</button>
-              {editingBookingId && <button type="button" className="ghost" onClick={resetBookingForm}>Cancel editing</button>}
+              <button disabled={isBusy}>{editingBookingId ? 'Päivitä varaus' : 'Luo varaus'}</button>
+              {editingBookingId && <button type="button" className="ghost" onClick={resetBookingForm}>Peruuta muokkaus</button>}
             </form>
           </div>
 
           <div>
-            <h2>Current bookings</h2>
+            <h2>Nykyiset varaukset</h2>
             <ul className="entity-list bookings">
               {sortedBookings.map((booking) => (
                 <li key={booking.id}>
@@ -456,8 +456,8 @@ export default function App() {
                     <span>{booking.checkInDate}{' -> '}{booking.checkOutDate}{' - '}{booking.totalPrice.toFixed(2)} EUR</span>
                   </div>
                   <div className="actions">
-                    <button className="ghost" onClick={() => loadBookingToEdit(booking)} disabled={isBusy}>Edit</button>
-                    <button className="danger" onClick={() => deleteBookingMutation.mutate(booking.id)} disabled={isBusy}>Delete</button>
+                    <button className="ghost" onClick={() => loadBookingToEdit(booking)} disabled={isBusy}>Muokkaa</button>
+                    <button className="danger" onClick={() => deleteBookingMutation.mutate(booking.id)} disabled={isBusy}>Peruuta</button>
                   </div>
                 </li>
               ))}
@@ -468,18 +468,18 @@ export default function App() {
 
       {activeTab === 'availability' && (
         <section className="panel">
-          <h2>Availability search</h2>
+          <h2>Saatavuushaku</h2>
           <form onSubmit={submitAvailabilityForm} className="form-grid compact">
             <input type="date" value={availabilityForm.checkInDate} onChange={(event) => setAvailabilityForm({ ...availabilityForm, checkInDate: event.target.value })} required />
             <input type="date" value={availabilityForm.checkOutDate} onChange={(event) => setAvailabilityForm({ ...availabilityForm, checkOutDate: event.target.value })} required />
             <input type="number" min="1" max="4" value={availabilityForm.guestCount} onChange={(event) => setAvailabilityForm({ ...availabilityForm, guestCount: event.target.value })} />
             <select value={availabilityForm.roomTypeId} onChange={(event) => setAvailabilityForm({ ...availabilityForm, roomTypeId: event.target.value })}>
-              <option value="">Any room type</option>
+              <option value="">Mikä tahansa huonetyyppi</option>
               {roomTypesQuery.data?.map((roomType) => (
                 <option key={roomType.id} value={roomType.id}>{roomType.name}</option>
               ))}
             </select>
-            <button disabled={isBusy}>Search</button>
+            <button disabled={isBusy}>Hae</button>
           </form>
 
           <ul className="entity-list">
@@ -487,7 +487,7 @@ export default function App() {
               <li key={item.roomId}>
                 <div>
                   <strong>{item.roomNumber} ({item.roomTypeName})</strong>
-                  <span>{item.nightlyRate.toFixed(2)} EUR / night, total {item.totalPrice.toFixed(2)} EUR</span>
+                  <span>{item.nightlyRate.toFixed(2)} EUR / yö, yhteensä {item.totalPrice.toFixed(2)} EUR</span>
                 </div>
               </li>
             ))}
@@ -498,19 +498,19 @@ export default function App() {
       {activeTab === 'reports' && (
         <section className="panel two-col">
           <div>
-            <h2>Report range</h2>
+            <h2>Raportin aikaväli</h2>
             <div className="form-grid compact">
               <input type="date" value={reportRange.fromDate} onChange={(event) => setReportRange({ ...reportRange, fromDate: event.target.value })} />
               <input type="date" value={reportRange.toDate} onChange={(event) => setReportRange({ ...reportRange, toDate: event.target.value })} />
             </div>
 
-            <h3>Occupancy</h3>
+            <h3>Käyttöaste</h3>
             <ul className="entity-list small">
               {occupancyQuery.data?.slice(-10).map((point) => (
                 <li key={point.date}>
                   <div>
                     <strong>{point.date}</strong>
-                    <span>{point.bookedRooms}/{point.totalRooms} rooms ({point.occupancyPercent.toFixed(1)}%)</span>
+                    <span>{point.bookedRooms}/{point.totalRooms} huonetta ({point.occupancyPercent.toFixed(1)}%)</span>
                   </div>
                 </li>
               ))}
@@ -518,7 +518,7 @@ export default function App() {
           </div>
 
           <div>
-            <h3>Revenue by period</h3>
+            <h3>Liikevaihto jaksoittain</h3>
             <ul className="entity-list small">
               {revenueQuery.data?.map((point) => (
                 <li key={point.period}>
@@ -530,13 +530,13 @@ export default function App() {
               ))}
             </ul>
 
-            <h3>Popular room types</h3>
+            <h3>Suosituimmat huonetyypit</h3>
             <ul className="entity-list small">
               {popularityQuery.data?.map((item) => (
                 <li key={item.roomTypeId}>
                   <div>
                     <strong>{item.roomTypeName}</strong>
-                    <span>{item.bookingCount} bookings, {item.revenue.toFixed(2)} EUR</span>
+                    <span>{item.bookingCount} varausta, {item.revenue.toFixed(2)} EUR</span>
                   </div>
                 </li>
               ))}
@@ -548,7 +548,7 @@ export default function App() {
       {(customersQuery.isError || roomTypesQuery.isError || roomsQuery.isError || bookingsQuery.isError) && (
         <section className="panel error-panel">
           <p>
-            API request failed. Ensure backend is running and CORS is enabled for <code>http://localhost:5173</code>.
+            API-pyyntö epäonnistui. Varmista, että backend on käynnissä ja CORS on sallittu osoitteelle <code>http://localhost:5173</code>.
           </p>
         </section>
       )}
