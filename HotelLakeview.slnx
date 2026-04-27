@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HotelLakeview.Api/HotelLakeview.Api.csproj" />
+    <Project Path="src/HotelLakeview.Application/HotelLakeview.Application.csproj" />
+    <Project Path="src/HotelLakeview.Domain/HotelLakeview.Domain.csproj" />
+    <Project Path="src/HotelLakeview.Infrastructure/HotelLakeview.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/HotelLakeview.IntegrationTests/HotelLakeview.IntegrationTests.csproj" />
+    <Project Path="tests/HotelLakeview.UnitTests/HotelLakeview.UnitTests.csproj" />
+  </Folder>
+</Solution>
